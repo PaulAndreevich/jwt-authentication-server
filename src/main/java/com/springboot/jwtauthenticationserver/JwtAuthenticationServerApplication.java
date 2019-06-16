@@ -21,6 +21,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.annotation.PostConstruct;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.TimeZone;
@@ -81,27 +82,32 @@ public class JwtAuthenticationServerApplication implements CommandLineRunner {
         User admin = new User(
                 "admin",
                 "admin@gmail.com",
-                encoder.encode(defaultPassword));
+                encoder.encode(defaultPassword),
+                Arrays.asList(1L, 2L));
 
         User simpleUser = new User(
                 "simpleUser",
                 "simpleUser@gmail.com",
-                encoder.encode(defaultPassword));
+                encoder.encode(defaultPassword),
+                Arrays.asList(3L, 4L));
 
         User user3 = new User(
                 "alex",
                 "alex@gmail.com",
-                defaultPassword);
+                defaultPassword,
+                Arrays.asList(5L, 6L));
 
         User user4 = new User(
                 "greg",
                 "greg@gmail.com",
-                defaultPassword);
+                defaultPassword,
+                Arrays.asList(3L, 2L));
 
         User user5 = new User(
                 "helen",
                 "hellen@gmail.com",
-                defaultPassword);
+                defaultPassword,
+                Arrays.asList(3L, 1L));
 
         admin.setRoles(Collections.singleton(Role.ADMIN));
         simpleUser.setRoles(Collections.singleton(Role.USER));

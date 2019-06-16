@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.time.Instant;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -21,8 +22,10 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonIgnore
     private Long id;
-
     private String username;
+
+    @ElementCollection(targetClass=Long.class)
+    private List<Long> playlist;
 
     @NaturalId
     private String email;
@@ -88,10 +91,19 @@ public class User implements UserDetails {
 
     public User() {}
 
-    public User(String username, String email, String password) {
+    public User(String username, String email, String password, List<Long> playlist) {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.playlist = playlist;
+    }
+
+    public List<Long> getPlaylist() {
+        return playlist;
+    }
+
+    public void setPlaylist(List<Long> playlist) {
+        this.playlist = playlist;
     }
 
     public Set<Role> getRoles() {
@@ -147,6 +159,7 @@ public class User implements UserDetails {
         return "Username: " + getUsername() + " " +
                 "Email: " + getEmail() + " " +
                 "Password: " + getPassword() + " " +
+                "Playlist: " + getPlaylist() + " " +
                 "Roles: " + getRoles().toString() + " " +
                 "CreatedAt: " + getDate().getCreatedAt().toString() + " " +
                 "UpdatedAt: " + getDate().getUpdatedAt().toString();
